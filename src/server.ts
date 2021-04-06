@@ -1,9 +1,3 @@
-import express from 'express'
+import { app } from './app'
 
-const app = express()
-
-app.get('/', (req, res) => {
-  return res.json({ message: 'Hello, World!' })
-})
-
-app.listen(5000, () => console.log('Server is Running!'))
+app.listen(4000, () => console.log('Server is Running!'))
