@@ -10,14 +10,19 @@ const router = Router()
 
 const userController = new UserController()
 const authenticationController = new AuthenticationController()
-const projectController = new ProjectController()
 const forgotPasswordController = new ForgotPasswordController()
 const resetPasswordController = new ResetPasswordController()
+const projectController = new ProjectController()
 
 router.post('/register', userController.create)
 router.post('/authentication', authenticationController.execute)
-router.get('/projects', authMiddleware, projectController.execute)
 router.post('/forgot_password', forgotPasswordController.execute)
 router.post('/reset_password', resetPasswordController.resetPassword)
+
+router.get('/projects', authMiddleware, projectController.listAllProjects)
+router.get('/projects/:projectId', authMiddleware, projectController.listOneProject)
+router.post('/projects', authMiddleware, projectController.createProject)
+router.put('/projects/:projectId', authMiddleware, projectController.updateProject)
+router.delete('/projects/:projectId', authMiddleware, projectController.deleteProject)
 
 export { router }
