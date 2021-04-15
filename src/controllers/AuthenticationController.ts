@@ -9,9 +9,9 @@ class AuthenticationController {
 
     const user = await User.findOne({ email }).select('+password')
 
-    if (!user) { return res.status(400).send({ error: 'User not found' }) }
+    if (!user) { return res.status(400).json({ error: 'User not found' }) }
 
-    if (!await bcrypt.compare(password, user.password)) { return res.status(400).send({ error: 'Invalid password' }) }
+    if (!await bcrypt.compare(password, user.password)) { return res.status(400).json({ error: 'Invalid password' }) }
 
     user.password = undefined
 
@@ -19,7 +19,7 @@ class AuthenticationController {
       expiresIn: 86400 // 1 Day
     })
 
-    res.send({ user, token })
+    res.json({ user, token })
   }
 }
 

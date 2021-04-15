@@ -7,15 +7,16 @@ class UserController {
     const { email } = req.body
 
     try {
-      if (await User.findOne({ email })) { return res.status(400).send({ error: 'User already exists!' }) }
+      if (await User.findOne({ email })) { return res.status(400).json({ error: 'User already exists!' }) }
       const user = await User.create(req.body)
       const token = jwt.sign({ id: user.id }, `${process.env.SECRET}`, {
         expiresIn: 86400 // 1 Day
       })
+
       user.password = undefined
-      return res.send({ user, token })
+      return res.status(201).json({ user, token })
     } catch (err) {
-      return res.status(400).send({ error: 'Registration Failed: ' })
+      return res.status(400).json({ error: 'Registration Failed' })
     }
   }
 }

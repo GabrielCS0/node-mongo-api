@@ -12,7 +12,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
   const [scheme, token] = parts
 
-  if (!/^Bearer$/i.test(scheme)) { return res.status(401).json({ error: 'Token malformatted' }) }
+  if (!/^Bearer$/i.test(scheme)) { return res.status(401).json({ error: 'Malformatted token' }) }
 
   jwt.verify(token, `${process.env.SECRET}`, (err, decoded) => {
     if (err) { return res.status(401).json({ error: 'Token invalid' }) }

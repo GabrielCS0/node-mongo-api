@@ -28,10 +28,11 @@ class ForgotPasswordController {
         new: true,
         useFindAndModify: false
       })
+
       const mailPath = resolve(__dirname, '..', 'views', 'emails', 'forgotPassword.hbs')
       await SendMailService.execute(email, 'Did you forget your password?', { token }, mailPath)
       console.log('Email message sent!')
-      res.send()
+      return res.send()
     } catch (err) {
       res.status(400).json({ error: 'Error on forgot password, try again' })
     }

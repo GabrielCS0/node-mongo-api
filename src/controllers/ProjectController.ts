@@ -34,7 +34,7 @@ class ProjectController {
 
       await project.save()
 
-      return res.send({ project })
+      return res.status(201).json({ project })
     } catch (err) {
       return res.status(400).json({ error: 'Error creating new project' })
     }
@@ -52,7 +52,7 @@ class ProjectController {
       })
 
       project.tasks = []
-      await Task.remove({ project: project._id })
+      await Task.deleteOne({ project: project._id })
 
       await Promise.all(tasks.map(async task => {
         const projectTask = new Task({ ...task, project: project._id })
@@ -62,7 +62,7 @@ class ProjectController {
 
       await project.save()
 
-      return res.send({ project })
+      return res.json({ project })
     } catch (err) {
       return res.status(400).json({ error: 'Error updating project' })
     }
@@ -70,7 +70,7 @@ class ProjectController {
 
   async deleteProject (req: Request, res: Response) {
     try {
-      await Project.findByIdAndRemove(req.params.projectId)
+      await Project.deleteOne({ _id: req.params.projectId })
       return res.send()
     } catch (err) {
       return res.status(400).json({ error: 'Error deleting project' })

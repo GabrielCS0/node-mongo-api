@@ -1,10 +1,10 @@
 import { mongoose } from 'src/database'
 
 export interface IUsersRepository extends mongoose.Document {
-    name: String;
-    email: String;
-    password: String;
-    passwordResetToken: String;
+    name: string;
+    email: string;
+    password: string;
+    passwordResetToken: string;
     passwordResetExpires: Date;
     createdAt: Date;
 }
